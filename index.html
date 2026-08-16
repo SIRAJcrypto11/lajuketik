@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark" data-accent="violet" data-lang="english" data-mode="time">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TypeFlow — 现代化打字测试应用。实时 WPM、准确率、多词库、双模式、主题美化，本地优先、零依赖。" />
+  <meta name="theme-color" content="#0f1115" />
+  <title>TypeFlow · 打字测试</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%237c5cff'/%3E%3Ctext x='50' y='70' font-size='58' font-family='monospace' font-weight='bold' fill='white' text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- 头部 -->
+    <header>
+      <div class="brand">
+        <div class="logo">T</div>
+        <div>
+          <h1>TypeFlow</h1>
+          <div class="tag">让打字变成一种心流</div>
+        </div>
+      </div>
+      <div class="nav">
+        <button class="icon-btn" id="restart" title="重新开始 (Esc)" aria-label="重新开始">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- 配置工具栏 -->
+    <div class="toolbar">
+      <div class="tool-group">
+        <span class="tool-label">模式</span>
+        <button class="tbtn mode-btn active" data-mode="time">计时</button>
+        <button class="tbtn mode-btn" data-mode="words">词数</button>
+      </div>
+      <div class="tool-sep"></div>
+      <div class="tool-group">
+        <button class="tbtn time-btn active" data-time="15">15</button>
+        <button class="tbtn time-btn" data-time="30">30</button>
+        <button class="tbtn time-btn" data-time="60">60</button>
+        <button class="tbtn time-btn" data-time="120">120</button>
+        <button class="tbtn word-btn hidden" data-words="10">10</button>
+        <button class="tbtn word-btn hidden" data-words="25">25</button>
+        <button class="tbtn word-btn hidden" data-words="50">50</button>
+        <button class="tbtn word-btn hidden" data-words="100">100</button>
+      </div>
+      <div class="tool-sep"></div>
+      <div class="tool-group">
+        <span class="tool-label">词库</span>
+        <button class="tbtn lang-btn active" data-lang="english">English</button>
+        <button class="tbtn lang-btn" data-lang="chinese">中文</button>
+        <button class="tbtn lang-btn" data-lang="code">Code</button>
+        <button class="tbtn lang-btn" data-lang="numbers">数字</button>
+      </div>
+      <div class="tool-sep"></div>
+      <div class="tool-group">
+        <button class="switch" id="togglePunctuation"><span class="dot"></span>标点</button>
+        <button class="switch" id="toggleNumbers"><span class="dot"></span>数字</button>
+      </div>
+      <div class="tool-sep"></div>
+      <div class="tool-group">
+        <span class="tool-label">主题</span>
+        <button class="tbtn theme-btn active" data-theme="dark">暗色</button>
+        <button class="tbtn theme-btn" data-theme="light">亮色</button>
+      </div>
+      <div class="tool-sep"></div>
+      <div class="tool-group">
+        <div class="swatches">
+          <button class="swatch active" data-accent="violet" title="紫罗兰"></button>
+          <button class="swatch" data-accent="cyan" title="青色"></button>
+          <button class="swatch" data-accent="emerald" title="翡翠"></button>
+          <button class="swatch" data-accent="rose" title="玫瑰"></button>
+          <button class="swatch" data-accent="amber" title="琥珀"></button>
+          <button class="swatch" data-accent="blue" title="天蓝"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 实时统计 -->
+    <div class="stats">
+      <div class="stat accent">
+        <div class="value" id="wpm">0</div>
+        <div class="label">速度 · WPM</div>
+      </div>
+      <div class="stat">
+        <div class="value" id="acc">100<small>%</small></div>
+        <div class="label">准确率</div>
+      </div>
+      <div class="stat">
+        <div class="value" id="raw">0</div>
+        <div class="label">原始 · RAW</div>
+      </div>
+      <div class="stat">
+        <div class="value" id="chars">0/0</div>
+        <div class="label">正确 / 输入</div>
+      </div>
+    </div>
+
+    <!-- 输入面板 -->
+    <div class="board" id="board">
+      <div class="countdown" id="timeLeft">30</div>
+      <div id="words"></div>
+      <div id="caret"></div>
+    </div>
+    <div class="hint">输入任意字符开始 · <kbd>Tab</kbd> 开始 · <kbd>Esc</kbd> 重新开始 · <kbd>Backspace</kbd> 退格</div>
+
+    <!-- 结果 -->
+    <div class="result" id="result">
+      <div class="pb-badge" id="pbBadge">🎉 新纪录！</div>
+      <div class="result-grid">
+        <div class="r-item primary">
+          <div class="v" id="resultWpm">0</div>
+          <div class="l">速度 · WPM</div>
+        </div>
+        <div class="r-item">
+          <div class="v" id="resultAcc">0%</div>
+          <div class="l">准确率</div>
+        </div>
+        <div class="r-item">
+          <div class="v" id="resultRaw">0</div>
+          <div class="l">原始 · RAW</div>
+        </div>
+      </div>
+      <div id="chart"></div>
+    </div>
+
+    <!-- 历史记录 -->
+    <div class="history">
+      <div class="history-head">
+        <h3>最近的成绩</h3>
+        <button class="clear" id="clearHistory">清空历史</button>
+      </div>
+      <ul id="historyList"></ul>
+      <div class="empty hidden" id="emptyHistory">还没有成绩，完成一次测试后这里会显示你的历史记录 📊</div>
+    </div>
+  </div>
+
+  <script src="js/words.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
