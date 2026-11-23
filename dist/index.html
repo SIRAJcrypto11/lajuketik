@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="id" data-theme="dark" data-accent="violet" data-lang="english" data-mode="time">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c0e12" />
+    <meta name="description" content="Ketik cepat. Lihat progres. Tingkatkan kemampuanmu." />
+    <title>TypeFlow — Latihan Mengetik</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%237c5cff'/%3E%3Ctext x='50' y='70' font-size='58' font-family='monospace' font-weight='bold' fill='white' text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="TypeFlow beranda">
+          <span class="logo" aria-hidden="true">T</span>
+          <span><strong>TypeFlow</strong><small>latihan mengetik tanpa distraksi</small></span>
+        </a>
+        <div class="top-actions">
+          <span class="local-badge"><span class="status-dot"></span> tersimpan lokal</span>
+          <button class="icon-btn" id="restart" title="Mulai ulang (Esc)" aria-label="Mulai ulang"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8.2M3 4v4.2h4.2" /></svg></button>
+        </div>
+      </header>
+
+      <main>
+        <section class="toolbar" aria-label="Pengaturan latihan">
+          <div class="control-group"><span class="control-label">Mode</span><div class="segmented"><button class="tbtn mode-btn active" data-mode="time">Waktu</button><button class="tbtn mode-btn" data-mode="words">Kata</button></div></div>
+          <div class="control-group options"><span class="control-label sr-only">Durasi</span><button class="tbtn time-btn" data-time="15">15s</button><button class="tbtn time-btn active" data-time="30">30s</button><button class="tbtn time-btn" data-time="60">60s</button><button class="tbtn time-btn" data-time="120">120s</button><button class="tbtn word-btn hidden" data-words="10">10</button><button class="tbtn word-btn hidden" data-words="25">25</button><button class="tbtn word-btn hidden" data-words="50">50</button><button class="tbtn word-btn hidden" data-words="100">100</button></div>
+          <div class="toolbar-divider"></div>
+          <div class="control-group"><span class="control-label">Teks</span><button class="tbtn lang-btn active" data-lang="english">English</button><button class="tbtn lang-btn" data-lang="chinese">中文</button><button class="tbtn lang-btn" data-lang="code">Code</button><button class="tbtn lang-btn" data-lang="numbers">123</button></div>
+          <div class="toolbar-divider"></div>
+          <div class="control-group toggles"><button class="switch" id="togglePunctuation"><span class="switch-dot"></span>Tanda baca</button><button class="switch" id="toggleNumbers"><span class="switch-dot"></span>Angka</button></div>
+          <div class="toolbar-spacer"></div>
+          <div class="control-group theme-controls"><button class="tbtn theme-btn active" data-theme="dark" aria-label="Tema gelap">Gelap</button><button class="tbtn theme-btn" data-theme="light" aria-label="Tema terang">Terang</button><div class="swatches" aria-label="Warna aksen"><button class="swatch active" data-accent="violet" title="Ungu"></button><button class="swatch" data-accent="cyan" title="Sian"></button><button class="swatch" data-accent="emerald" title="Hijau"></button><button class="swatch" data-accent="rose" title="Merah muda"></button><button class="swatch" data-accent="amber" title="Kuning"></button><button class="swatch" data-accent="blue" title="Biru"></button></div></div>
+        </section>
+
+        <section class="stats" aria-label="Statistik langsung"><div class="stat accent"><div class="value" id="wpm">0</div><div class="label">WPM</div></div><div class="stat"><div class="value" id="acc">100<small>%</small></div><div class="label">Akurasi</div></div><div class="stat"><div class="value" id="raw">0</div><div class="label">Raw</div></div><div class="stat"><div class="value" id="chars">0/0</div><div class="label">Benar / total</div></div></section>
+
+        <section class="typing-card" id="board" aria-label="Area mengetik" tabindex="-1"><div class="card-topline"><span class="eyebrow">SIAP?</span><span class="countdown" id="timeLeft">30</span></div><div id="words" aria-live="polite"></div><div id="caret" aria-hidden="true"></div><div class="start-overlay" aria-hidden="true"><span>Mulai mengetik</span><kbd>Tab</kbd></div></section>
+        <p class="hint">Ketik apa saja untuk mulai <kbd>Tab</kbd> mulai · <kbd>Esc</kbd> ulangi · <kbd>Backspace</kbd> hapus</p>
+
+        <section class="result" id="result" aria-label="Hasil latihan"><div class="result-heading"><div><span class="eyebrow">SESI SELESAI</span><h2>Bagus. Satu sesi lagi?</h2></div><div class="pb-badge" id="pbBadge">Rekor baru</div></div><div class="result-grid"><div class="r-item primary"><div class="v" id="resultWpm">0</div><div class="l">WPM</div></div><div class="r-item"><div class="v" id="resultAcc">0%</div><div class="l">Akurasi</div></div><div class="r-item"><div class="v" id="resultRaw">0</div><div class="l">Raw</div></div></div><div class="chart-label">Tren WPM</div><div id="chart"></div></section>
+
+        <section class="history"><div class="history-head"><div><span class="eyebrow">RIWAYAT</span><h2>Sesi terbaru</h2></div><button class="clear" id="clearHistory">Hapus semua</button></div><ul id="historyList"></ul><div class="empty hidden" id="emptyHistory">Belum ada sesi. Hasil latihanmu akan muncul di sini.</div></section>
+      </main>
+      <footer><span>TypeFlow</span><span>Latihan singkat. Progres nyata.</span></footer>
+    </div>
+    <script src="js/words.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
