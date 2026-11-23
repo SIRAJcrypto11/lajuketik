@@ -1,25 +1,16 @@
 {
   "name": "typeflow",
   "version": "1.0.0",
-  "description": "TypeFlow — 现代化打字测试应用。实时 WPM/准确率、双模式、多词库、主题美化，本地优先、零运行时依赖。",
-  "keywords": ["typing", "typing-test", "wpm", "touch-typing", "frontend", "local-first", "pwa"],
+  "private": false,
+  "description": "A fast, local-first typing practice app inspired by minimalist typing tests.",
+  "keywords": ["typing-test", "wpm", "touch-typing", "productivity", "vanilla-javascript"],
   "license": "MIT",
-  "author": "gitstq",
+  "author": "TypeFlow Contributors",
   "type": "module",
-  "main": "index.html",
   "scripts": {
-    "start": "npx --yes serve . -l 5173 --no-clipboard",
     "dev": "npx --yes serve . -l 5173 --no-clipboard",
-    "build": "echo \"TypeFlow 为纯静态应用，无需构建。直接打开 index.html 或运行 npm start。\""
+    "start": "npx --yes serve . -l 5173 --no-clipboard",
+    "build": "node -e \"console.log('TypeFlow is a static app; no build step required.')\""
   },
-  "engines": {
-    "node": ">=16"
-  },
-  "files": [
-    "index.html",
-    "css/",
-    "js/",
-    "LICENSE",
-    "README.md"
-  ]
+  "engines": { "node": ">=16" }
 }

@@ -19,7 +19,7 @@
       punctuation: false,
       numbers: false,
       theme: "dark",       // dark | light
-      accent: "#7c5cff"
+      accent: "violet"
     },
     running: false,
     finished: false,
@@ -48,6 +48,7 @@
     themeButtons: $$(".theme-btn"),
     accentSwatches: $$(".swatch"),
     board: $("#board"),
+    startOverlay: $(".start-overlay"),
     wordsBox: $("#words"),
     caret: $("#caret"),
     wpm: $("#wpm"),
@@ -74,7 +75,10 @@
   function loadPrefs() {
     try {
       const p = JSON.parse(localStorage.getItem(PREF_KEY));
-      if (p) Object.assign(state.config, p);
+      if (p) {
+        Object.assign(state.config, p);
+        if (state.config.accent === "#7c5cff") state.config.accent = "violet";
+      }
     } catch (e) { /* ignore */ }
   }
   function savePrefs() {
@@ -174,6 +178,7 @@
   function startTimer() {
     state.running = true;
     state.finished = false;
+    els.startOverlay.style.opacity = "0";
     state.startTime = performance.now();
     if (state.config.mode === "time") {
       state.remaining = state.config.time * 1000;
@@ -345,6 +350,7 @@
     clearInterval(state.timerId);
     state.running = false;
     state.finished = true;
+    els.startOverlay.style.opacity = "0.8";
     const secs = state.config.mode === "time"
       ? state.config.time
       : (performance.now() - state.startTime) / 1000;
@@ -397,7 +403,7 @@
     const box = els.chart;
     box.innerHTML = "";
     if (stats.length < 2) {
-      box.innerHTML = '<div class="chart-empty">完成更多测试以生成趋势图 📈</div>';
+      box.innerHTML = '<div class="chart-empty">Selesaikan beberapa sesi untuk melihat tren 📈</div>';
       return;
     }
     const w = 560, h = 120, pad = 8;
@@ -427,11 +433,12 @@
     els.emptyHistory.classList.toggle("hidden", stats.length > 0);
     stats.forEach((s) => {
       if (!s || !s.wpm) return;
-      const date = new Date(s.ts).toLocaleString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" });
+      const date = new Date(s.ts).toLocaleString("id-ID", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
+      const language = { english: "English", chinese: "中文", code: "Code", numbers: "Angka" }[s.language] || s.language;
       const li = document.createElement("li");
       li.innerHTML = `<span class="h-wpm">${s.wpm}<em>WPM</em></span>
         <span class="h-acc">${s.acc}%</span>
-        <span class="h-mode">${s.language} · ${s.mode === "time" ? s.time + "s" : s.words + "词"}</span>
+        <span class="h-mode">${language} · ${s.mode === "time" ? s.time + " detik" : s.words + " kata"}</span>
         <span class="h-time">${date}</span>`;
       els.historyList.appendChild(li);
     });
@@ -443,6 +450,7 @@
     state.running = false;
     state.finished = false;
     state.elapsed = 0;
+    els.startOverlay.style.opacity = "0.8";
     if (state.config.mode === "time") els.timeLeft.textContent = state.config.time;
     els.wpm.textContent = "0";
     els.acc.textContent = "100.0";
