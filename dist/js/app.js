@@ -524,14 +524,15 @@
       if (e.key === "Tab") { e.preventDefault(); if (!state.running) startTimer(); return; }
       if (e.key === "Escape") { e.preventDefault(); reset(); return; }
       if (e.ctrlKey || e.metaKey || e.altKey) return;
-      if (e.key.length === 1) {
+      const action = window.TypeFlowInput.classifyKey(e.key);
+      if (action === "character") {
         e.preventDefault();
         if (!state.running) startTimer();
         handleKey(e.key, false, false);
-      } else if (e.key === "Backspace") {
+      } else if (action === "backspace") {
         e.preventDefault();
         handleKey("", true, false);
-      } else if (e.key === " ") {
+      } else if (action === "space") {
         e.preventDefault();
         handleKey("", false, true);
       }
