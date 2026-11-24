@@ -1,16 +1,16 @@
 {
-  "name": "typeflow",
+  "name": "lajuketik",
   "version": "1.0.0",
   "private": false,
-  "description": "A fast, local-first typing practice app inspired by minimalist typing tests.",
+  "description": "A warm, local-first typing practice studio for building speed and rhythm.",
   "keywords": ["typing-test", "wpm", "touch-typing", "productivity", "vanilla-javascript"],
   "license": "MIT",
-  "author": "TypeFlow Contributors",
+  "author": "LajuKetik Contributors",
   "type": "module",
   "scripts": {
     "dev": "npx --yes serve . -l 5173 --no-clipboard",
     "start": "npx --yes serve . -l 5173 --no-clipboard",
-    "build": "node -e \"console.log('TypeFlow is a static app; no build step required.')\"",
+    "build": "node -e \"console.log('LajuKetik is a static app; no build step required.')\"",
     "test": "node --test test/input-routing.test.mjs"
   },
   "engines": { "node": ">=16" }

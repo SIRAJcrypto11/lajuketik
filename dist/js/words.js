@@ -1,5 +1,5 @@
 /**
- * TypeFlow — 词库数据
+ * LajuKetik — kumpulan kata latihan
  * 内置多套词库：英文、中文、代码、数字，支持组合与自定义随机源。
  * 全部数据本地内置，无需任何网络请求。
  */

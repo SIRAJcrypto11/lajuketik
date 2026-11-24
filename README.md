@@ -1,6 +1,8 @@
-# TypeFlow
+# LajuKetik
 
-TypeFlow adalah aplikasi latihan mengetik yang cepat, fokus, dan berjalan sepenuhnya di browser. UI-nya dibuat ulang dengan identitas sendiri, mengambil fondasi dari [TypeFlow](https://github.com/gitstq/TypeFlow) yang berlisensi MIT.
+LajuKetik adalah studio latihan mengetik yang cepat, fokus, dan berjalan sepenuhnya di browser. Identitas visual, copy, dan struktur pengalaman pengguna dibuat khusus untuk brand LajuKetik.
+
+Mesin awalnya diadaptasi dari [TypeFlow](https://github.com/gitstq/TypeFlow), proyek open-source berlisensi MIT. Kode yang diadaptasi tetap membawa pemberitahuan lisensi dan atribusi sesuai ketentuan MIT.
 
 ## Fitur
 
@@ -25,4 +27,4 @@ Karena aplikasi ini static, deployment dapat memakai GitHub Pages, Netlify, Verc
 
 ## Lisensi
 
-Kode proyek ini tersedia di bawah lisensi MIT. Berkas `LICENSE` dipertahankan sebagai pemberitahuan lisensi dan atribusi untuk fondasi TypeFlow yang digunakan.
+Kode proyek ini tersedia di bawah lisensi MIT. Berkas `LICENSE` dipertahankan sebagai pemberitahuan lisensi dan atribusi untuk fondasi open-source yang digunakan.

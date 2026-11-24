@@ -1,56 +1,35 @@
-# 贡献指南 · Contributing
+# Panduan kontribusi LajuKetik
 
-欢迎参与 TypeFlow 的开发！无论是提交 Issue、修复 Bug、新增功能还是完善文档，都对你的贡献表示感谢。🙌
+Terima kasih sudah membantu membuat latihan mengetik terasa lebih fokus dan menyenangkan.
 
-## 本地开发
+## Pengembangan lokal
 
 ```bash
-# 克隆仓库
-git clone https://github.com/gitstq/TypeFlow.git
-cd TypeFlow
-
-# 启动本地静态服务器
-npm start
-# 或使用任意静态服务器，例如：
-# python3 -m http.server 5173
+npm install
+npm run dev
 ```
 
-项目为纯前端静态应用，**无需构建**，直接打开 `index.html` 或启动静态服务器即可运行。
+Jalankan test sebelum membuat perubahan:
 
-## 提交规范
+```bash
+npm test
+npm run build
+```
 
-请遵循 [Angular Commit Message Conventions](https://www.conventionalcommits.org/zh-hans/)：
+LajuKetik adalah aplikasi static tanpa backend dan tanpa dependency runtime tambahan.
 
-- `feat:` 新增功能
-- `fix:` 修复问题
-- `docs:` 文档更新
-- `refactor:` 代码重构
-- `perf:` 性能优化
-- `style:` 样式调整
-- `test:` 测试相关
-- `chore:` 构建/工具配置
+## Commit dan pull request
 
-示例：`feat: 新增自定义词库导入功能`
+Gunakan commit yang jelas, misalnya:
 
-## 分支流程
+- `feat:` fitur baru
+- `fix:` perbaikan bug
+- `docs:` dokumentasi
+- `test:` perubahan test
+- `chore:` tooling atau konfigurasi
 
-1. 从 `main` 拉取最新代码并创建功能分支：`git checkout -b feat/your-feature`
-2. 完成开发并本地自测
-3. 提交清晰的 commit，推送到你的分支
-4. 发起 Pull Request，描述你的改动与动机
+Jelaskan perilaku sebelum dan sesudah perubahan. Untuk perubahan visual, sertakan screenshot atau rekaman singkat jika tersedia.
 
-## Issue 反馈
+## Lisensi dan atribusi
 
-- 描述清楚的复现步骤、期望行为与实际行为
-- 注明浏览器与版本、操作系统
-- 若能附带截图或录屏最佳
-
-## 代码风格
-
-- 保持现有代码风格（同目录下风格一致）
-- 注释清晰、结构合理、无冗余代码
-- 不引入非必要的第三方依赖（本项目目标为「零依赖、可离线运行」）
-
-## 协议
-
-本项目使用 MIT 协议，详见 [LICENSE](./LICENSE)。
+LajuKetik dirilis di bawah MIT. Sebagian fondasi teknis diadaptasi dari proyek open-source TypeFlow; jangan menghapus berkas `LICENSE` atau atribusi yang diwajibkan.

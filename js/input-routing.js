@@ -6,5 +6,5 @@
     return "ignore";
   }
 
-  root.TypeFlowInput = { classifyKey };
+  root.LajuKetikInput = { classifyKey };
 })(typeof window === "undefined" ? globalThis : window);

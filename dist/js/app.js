@@ -1,5 +1,5 @@
 /**
- * TypeFlow — 现代化打字测试应用核心逻辑
+ * LajuKetik — mesin latihan mengetik inti
  * 特性：实时 WPM/准确率、计时/词数双模式、多词库、主题切换、本地成绩与趋势图
  * 零依赖、纯前端、localStorage 持久化。
  */
@@ -69,15 +69,19 @@
   };
 
   // ---------- 持久化 ----------
-  const PREF_KEY = "typeflow:prefs";
-  const STATS_KEY = "typeflow:stats";
+  const PREF_KEY = "lajuketik:prefs";
+  const STATS_KEY = "lajuketik:stats";
+  const LEGACY_PREF_KEY = "typeflow:prefs";
+  const LEGACY_STATS_KEY = "typeflow:stats";
 
   function loadPrefs() {
     try {
-      const p = JSON.parse(localStorage.getItem(PREF_KEY));
+      const source = localStorage.getItem(PREF_KEY) || localStorage.getItem(LEGACY_PREF_KEY);
+      const p = JSON.parse(source);
       if (p) {
         Object.assign(state.config, p);
         if (state.config.accent === "#7c5cff") state.config.accent = "violet";
+        localStorage.setItem(PREF_KEY, JSON.stringify(state.config));
       }
     } catch (e) { /* ignore */ }
   }
@@ -86,7 +90,9 @@
   }
   function loadStats() {
     try {
-      const s = JSON.parse(localStorage.getItem(STATS_KEY));
+      const source = localStorage.getItem(STATS_KEY) || localStorage.getItem(LEGACY_STATS_KEY);
+      const s = JSON.parse(source);
+      if (!localStorage.getItem(STATS_KEY) && Array.isArray(s)) localStorage.setItem(STATS_KEY, JSON.stringify(s));
       return Array.isArray(s) ? s : [];
     } catch (e) { return []; }
   }
@@ -524,7 +530,7 @@
       if (e.key === "Tab") { e.preventDefault(); if (!state.running) startTimer(); return; }
       if (e.key === "Escape") { e.preventDefault(); reset(); return; }
       if (e.ctrlKey || e.metaKey || e.altKey) return;
-      const action = window.TypeFlowInput.classifyKey(e.key);
+      const action = window.LajuKetikInput.classifyKey(e.key);
       if (action === "character") {
         e.preventDefault();
         if (!state.running) startTimer();

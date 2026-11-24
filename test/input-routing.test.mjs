@@ -6,7 +6,7 @@ import test from "node:test";
 const source = fs.readFileSync(new URL("../js/input-routing.js", import.meta.url), "utf8");
 const sandbox = { window: {} };
 vm.runInNewContext(source, sandbox, { filename: "js/input-routing.js" });
-const { classifyKey } = sandbox.window.TypeFlowInput;
+const { classifyKey } = sandbox.window.LajuKetikInput;
 
 test("space advances to the next word instead of becoming a character", () => {
   assert.equal(classifyKey(" "), "space");
