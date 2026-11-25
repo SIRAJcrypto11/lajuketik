@@ -1,4 +1,4 @@
-name: Deploy TypeFlow
+name: Deploy LajuKetik
 
 on:
   push:

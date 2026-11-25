@@ -107,16 +107,42 @@
   // ---------- 配置 UI 同步 ----------
   function syncUI() {
     const c = state.config;
-    els.modeButtons.forEach((b) => b.classList.toggle("active", b.dataset.mode === c.mode));
+    els.modeButtons.forEach((b) => {
+      const active = b.dataset.mode === c.mode;
+      b.classList.toggle("active", active);
+      b.setAttribute("aria-pressed", String(active));
+    });
     els.timeButtons.forEach((b) => b.classList.toggle("hidden", c.mode !== "time"));
     els.wordButtons.forEach((b) => b.classList.toggle("hidden", c.mode !== "words"));
-    els.timeButtons.forEach((b) => b.classList.toggle("active", b.dataset.time === String(c.time)));
-    els.wordButtons.forEach((b) => b.classList.toggle("active", b.dataset.words === String(c.words)));
-    els.langButtons.forEach((b) => b.classList.toggle("active", b.dataset.lang === c.language));
+    els.timeButtons.forEach((b) => {
+      const active = b.dataset.time === String(c.time);
+      b.classList.toggle("active", active);
+      b.setAttribute("aria-pressed", String(active));
+    });
+    els.wordButtons.forEach((b) => {
+      const active = b.dataset.words === String(c.words);
+      b.classList.toggle("active", active);
+      b.setAttribute("aria-pressed", String(active));
+    });
+    els.langButtons.forEach((b) => {
+      const active = b.dataset.lang === c.language;
+      b.classList.toggle("active", active);
+      b.setAttribute("aria-pressed", String(active));
+    });
     els.punctuation.classList.toggle("active", c.punctuation);
     els.numbers.classList.toggle("active", c.numbers);
-    els.themeButtons.forEach((b) => b.classList.toggle("active", b.dataset.theme === c.theme));
-    els.accentSwatches.forEach((s) => s.classList.toggle("active", s.dataset.accent === c.accent));
+    els.punctuation.setAttribute("aria-pressed", String(c.punctuation));
+    els.numbers.setAttribute("aria-pressed", String(c.numbers));
+    els.themeButtons.forEach((b) => {
+      const active = b.dataset.theme === c.theme;
+      b.classList.toggle("active", active);
+      b.setAttribute("aria-pressed", String(active));
+    });
+    els.accentSwatches.forEach((s) => {
+      const active = s.dataset.accent === c.accent;
+      s.classList.toggle("active", active);
+      s.setAttribute("aria-pressed", String(active));
+    });
     document.documentElement.setAttribute("data-theme", c.theme);
     document.documentElement.setAttribute("data-accent", c.accent);
     document.documentElement.setAttribute("data-lang", c.language);
@@ -256,7 +282,8 @@
     if (isSpace) {
       if (pos < word.length) {
         // 提前空格：补齐剩余字符为错误
-        while (typ.chars.length < word.length) typ.chars.push({ c: "", wrong: true });
+        window.LajuKetikInput.recordSkippedCharacters(typ, word.length, state.keyEvents, () => performance.now());
+        state.totalKeystrokes = state.keyEvents.length;
       }
       state.currentWord++;
       if (state.currentWord >= state.words.length) {
@@ -296,6 +323,15 @@
     renderCurrentWordStatus();
     positionCaret();
     updateLiveStats();
+    if (window.LajuKetikInput.shouldFinishWordsMode(
+      state.config.mode,
+      state.currentWord,
+      state.words.length,
+      typ.chars.length,
+      word.length
+    )) {
+      finishTest();
+    }
   }
 
   function extendArticle() {
@@ -527,7 +563,11 @@
 
     // 键盘输入
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Tab") { e.preventDefault(); if (!state.running) startTimer(); return; }
+      if (window.LajuKetikInput.shouldStartFromTab(e.key, e.target === els.board, state.running)) {
+        e.preventDefault();
+        startTimer();
+        return;
+      }
       if (e.key === "Escape") { e.preventDefault(); reset(); return; }
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       const action = window.LajuKetikInput.classifyKey(e.key);
